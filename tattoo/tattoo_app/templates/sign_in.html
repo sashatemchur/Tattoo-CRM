@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign In | TattooCRM</title>
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/sign_in/sign_in.css' %}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h3 class="gold-title">TattooCRM</h3>
+
+    <h1 class="title">
+        <i class="fa-solid fa-lock lock-icon"></i>
+        Welcome Back
+    </h1>
+
+    <p>
+        Увійдіть до свого акаунта та продовжуйте
+        керувати клієнтами, записами та фінансами.
+    </p>
+
+    <form>
+
+        <input
+                type="email"
+                placeholder="Email">
+
+        <div class="password-box">
+
+            <input
+                    id="password"
+                    type="password"
+                    placeholder="Пароль">
+
+            <i class="fa-regular fa-eye"
+               id="togglePassword"></i>
+
+        </div>
+
+        <div class="options">
+
+            <label class="remember">
+
+                <input type="checkbox">
+
+                Запам'ятати мене
+
+            </label>
+
+            <a href="#" class="forgot">
+
+                Забули пароль?
+
+            </a>
+
+        </div>
+
+        <button>
+
+            Увійти
+
+        </button>
+
+    </form>
+
+    <span>
+
+        Немає акаунта?
+
+        <a href="/sign-up/">
+
+            Зареєструватися
+
+        </a>
+
+    </span>
+
+    <span>
+
+        Повернутися на головну сторінку
+
+        <a href="/">
+
+            Home
+
+        </a>
+
+    </span>
+
+
+</div>
+
+<script>
+
+const password = document.getElementById("password");
+
+const eye = document.getElementById("togglePassword");
+
+eye.onclick = function(){
+
+    if(password.type==="password"){
+
+        password.type="text";
+
+        eye.classList.remove("fa-eye");
+
+        eye.classList.add("fa-eye-slash");
+
+    }else{
+
+        password.type="password";
+
+        eye.classList.remove("fa-eye-slash");
+
+        eye.classList.add("fa-eye");
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#090909;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:100vh;
+
+    font-family:Montserrat,sans-serif;
+
+    color:white;
+}
+
+.signup-box{
+
+    width:500px;
+
+    padding:60px;
+
+    background:#111;
+
+    border:1px solid #cfa86a;
+
+    box-shadow:0 0 40px rgba(0,0,0,.5);
+
+    text-align:center;
+}
+
+.gold-title{
+
+    color:#cfa86a;
+
+    font-family:Playfair Display;
+
+    margin-bottom:10px;
+
+    font-size:22px;
+}
+
+h1{
+
+    font-size:42px;
+
+    margin-bottom:15px;
+
+    font-family:Playfair Display;
+}
+
+p{
+
+    color:#bdbdbd;
+
+    margin-bottom:40px;
+
+    line-height:1.7;
+}
+
+input{
+
+    width:100%;
+
+    padding:18px;
+
+    margin-bottom:18px;
+
+    background:#181818;
+
+    border:1px solid #2d2d2d;
+
+    color:white;
+
+    font-size:15px;
+
+    transition:.3s;
+}
+
+input:focus{
+
+    border-color:#cfa86a;
+
+    outline:none;
+}
+
+.checkbox{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin:20px 0;
+
+    color:#aaa;
+
+    font-size:14px;
+}
+
+.checkbox input{
+
+    width:auto;
+
+    margin:0;
+}
+.password-box{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.password-box input{
+    margin: 0;
+    width: 100%;
+    padding-right: 50px;
+}
+
+.password-box i{
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #cfa86a;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.password-box i:hover{
+    color: white;
+}
+button{
+
+    width:100%;
+
+    padding:18px;
+
+    border:1px solid #cfa86a;
+
+    background:none;
+
+    color:#cfa86a;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
+}
+
+button:hover{
+
+    background:#cfa86a;
+
+    color:black;
+}
+
+span{
+
+    display:block;
+
+    margin-top:35px;
+
+    color:#999;
+}
+
+a{
+
+    color:#cfa86a;
+
+    text-decoration:none;
+}

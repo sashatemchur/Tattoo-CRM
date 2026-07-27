@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up | TattooCRM</title>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link rel="stylesheet" href="{% static 'css/sign_up/sign_up.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sign_up/sign_up.css' %}">
+</head>
+
+<body>
+
+<div class="signup-box">
+
+    <h3 class="gold-title">TattooCRM</h3>
+
+    <h1>Create Your Account</h1>
+
+    <p>
+        Приєднуйтесь до професійної CRM для
+        тату-майстрів та студій.
+    </p>
+
+    <form>
+
+        <input type="text" placeholder="Ім'я">
+
+        <input type="email" placeholder="Email">
+
+        <div class="password-box">
+            <input
+                id="password"
+                type="password"
+                placeholder="Пароль">
+        
+            <i class="fa-regular fa-eye toggle-password"></i>
+        </div>
+        
+        <div class="password-box">
+            <input
+                id="confirmPassword"
+                type="password"
+                placeholder="Підтвердіть пароль">
+        
+            <i class="fa-regular fa-eye toggle-password"></i>
+        </div>
+
+        <label class="checkbox">
+            <input type="checkbox">
+            Я погоджуюсь з умовами використання
+        </label>
+
+        <button>
+            Створити акаунт
+        </button>
+
+    </form>
+
+    <span>
+        Вже є акаунт?
+        <a href="/sign-in/">Увійти</a>
+    </span>
+    <span>
+
+        Повернутися на головну сторінку
+
+        <a href="/">
+
+            Home
+
+        </a>
+
+    </span>
+
+
+</div>
+
+
+<script>
+
+    document.querySelectorAll(".toggle-password").forEach(function(eye){
+    
+        eye.addEventListener("click", function(){
+    
+            const input = this.previousElementSibling;
+    
+            if(input.type === "password"){
+    
+                input.type = "text";
+                this.classList.remove("fa-eye");
+                this.classList.add("fa-eye-slash");
+    
+            }else{
+    
+                input.type = "password";
+                this.classList.remove("fa-eye-slash");
+                this.classList.add("fa-eye");
+    
+            }
+    
+        });
+    
+    });
+    
+    </script>
+
+</body>
+</html>
