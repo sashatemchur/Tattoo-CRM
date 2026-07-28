@@ -5,25 +5,21 @@
 }
 
 body{
-
     background:#090909;
+    font-family:Montserrat,sans-serif;
+    color:white;
 
     display:flex;
-
     justify-content:center;
-
     align-items:center;
 
-    height:100vh;
-
-    font-family:Montserrat,sans-serif;
-
-    color:white;
+    min-height:100vh;
+    padding:40px 20px;
 }
 
 .signup-box{
-
-    width:500px;
+    width:100%;
+    max-width:500px;
 
     padding:60px;
 
@@ -176,4 +172,263 @@ a{
     color:#cfa86a;
 
     text-decoration:none;
+}
+
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width: 768px){
+
+    body{
+        padding:30px 20px;
+        height:auto;
+        min-height:100vh;
+    }
+
+    .signup-box{
+
+        width:100%;
+        max-width:500px;
+        padding:40px 30px;
+
+    }
+
+    h1{
+
+        font-size:34px;
+
+    }
+
+    p{
+
+        font-size:15px;
+
+    }
+
+    input{
+
+        padding:16px;
+
+    }
+
+    button{
+
+        padding:16px;
+
+    }
+
+}
+/* ===========================
+   PHONE
+=========================== */
+
+@media (max-width:480px){
+
+    body{
+
+        padding:20px 15px;
+
+    }
+
+    .signup-box{
+
+        padding:30px 20px;
+
+        border-radius:16px;
+
+    }
+
+    .gold-title{
+
+        font-size:18px;
+
+    }
+
+    h1{
+
+        font-size:28px;
+
+        margin-bottom:12px;
+
+    }
+
+    p{
+
+        font-size:14px;
+
+        margin-bottom:25px;
+
+    }
+
+    input{
+
+        padding:15px;
+        font-size:14px;
+
+    }
+
+    .password-box i{
+
+        right:15px;
+        font-size:18px;
+
+    }
+
+    button{
+
+        padding:15px;
+        font-size:15px;
+
+    }
+
+    .checkbox{
+
+        font-size:13px;
+        align-items:flex-start;
+
+    }
+
+    span{
+
+        font-size:14px;
+
+    }
+
+}
+
+@media (max-width:360px){
+
+    .signup-box{
+
+        padding:25px 15px;
+
+    }
+
+    h1{
+
+        font-size:24px;
+
+    }
+
+    input{
+
+        padding:14px;
+
+    }
+
+    button{
+
+        padding:14px;
+
+    }
+
+}
+
+/* ===========================
+   Планшети
+=========================== */
+
+@media (max-width:992px){
+
+    .signup-box{
+        max-width:520px;
+        padding:45px;
+    }
+
+    h1{
+        font-size:36px;
+    }
+
+}
+
+
+/* ===========================
+   Телефони
+=========================== */
+
+@media (max-width:768px){
+
+    body{
+        padding:30px 15px;
+        align-items:flex-start;
+    }
+
+    .signup-box{
+
+        max-width:100%;
+
+        padding:35px 25px;
+
+        margin-top:40px;
+        margin-bottom:40px;
+    }
+
+    h1{
+        font-size:30px;
+    }
+
+    p{
+        font-size:15px;
+        margin-bottom:25px;
+    }
+
+    input{
+
+        padding:15px;
+        font-size:15px;
+    }
+
+    button{
+
+        padding:15px;
+    }
+
+}
+
+
+/* ===========================
+   Маленькі телефони
+=========================== */
+
+@media (max-width:480px){
+
+    .signup-box{
+
+        padding:25px 18px;
+    }
+
+    .gold-title{
+
+        font-size:18px;
+    }
+
+    h1{
+
+        font-size:26px;
+    }
+
+    p{
+
+        font-size:14px;
+    }
+
+    input{
+
+        padding:14px;
+        font-size:14px;
+    }
+
+    button{
+
+        padding:14px;
+        font-size:15px;
+    }
+
+    span{
+
+        font-size:13px;
+    }
+
 }

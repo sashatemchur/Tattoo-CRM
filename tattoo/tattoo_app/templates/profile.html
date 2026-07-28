@@ -1,0 +1,313 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up | TattooCRM</title>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link rel="stylesheet" href="{% static 'css/sign_up/sign_up.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sign_up/sign_up.css' %}">
+</head>
+
+<body>
+
+    <section class="dashboard">
+
+        <div class="container">
+    
+            <div class="dashboard-header">
+    
+                <div>
+                    <span class="dashboard-subtitle">
+                        Dashboard
+                    </span>
+    
+                    <h1>
+                        Доброго дня, Олександр 👋
+                    </h1>
+    
+                    <p>
+                        Ось коротка інформація про сьогоднішній день.
+                    </p>
+                </div>
+    
+            </div>
+    
+            <div class="dashboard-cards">
+    
+                <div class="dashboard-card">
+    
+                    <div class="card-icon">
+                        📅
+                    </div>
+    
+                    <h2>8</h2>
+    
+                    <span>Записів сьогодні</span>
+    
+                </div>
+    
+                <div class="dashboard-card">
+    
+                    <div class="card-icon">
+                        🟢
+                    </div>
+    
+                    <h2>6</h2>
+    
+                    <span>Підтверджено</span>
+    
+                </div>
+    
+                <div class="dashboard-card">
+    
+                    <div class="card-icon">
+                        🟡
+                    </div>
+    
+                    <h2>2</h2>
+    
+                    <span>Очікують</span>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </section>
+
+
+
+
+
+
+
+
+
+
+    <section class="balance">
+
+        <div class="container">
+    
+            <div class="balance-card">
+    
+                <div class="balance-left">
+    
+                    <span class="balance-title">
+                        Баланс
+                    </span>
+    
+                    <h2>
+                        18 540 грн
+                    </h2>
+    
+                    <div class="balance-info">
+    
+                        <div>
+    
+                            <h3>+4 800 грн</h3>
+    
+                            <span>Сьогодні</span>
+    
+                        </div>
+    
+                        <div>
+    
+                            <h3>68 300 грн</h3>
+    
+                            <span>За місяць</span>
+    
+                        </div>
+    
+                        <div>
+    
+                            <h3>152</h3>
+    
+                            <span>Клієнтів</span>
+    
+                        </div>
+    
+                    </div>
+    
+                </div>
+    
+                <div class="balance-right">
+    
+                    <div class="graph">
+    
+                        <div class="bar" style="height:60px;"></div>
+    
+                        <div class="bar" style="height:100px;"></div>
+    
+                        <div class="bar" style="height:80px;"></div>
+    
+                        <div class="bar" style="height:130px;"></div>
+    
+                        <div class="bar" style="height:110px;"></div>
+    
+                        <div class="bar" style="height:150px;"></div>
+    
+                        <div class="bar" style="height:170px;"></div>
+    
+                    </div>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </section>
+
+    <section class="appointments">
+
+        <div class="container">
+    
+            <div class="section-header">
+    
+                <h2>Останні записи</h2>
+    
+                <a href="#">Усі записи →</a>
+    
+            </div>
+    
+            <div class="appointment-list">
+    
+                <div class="appointment-card">
+    
+                    <div class="appointment-user">
+    
+                        <div class="avatar">
+                            А
+                        </div>
+    
+                        <div>
+    
+                            <h3>Анна</h3>
+    
+                            <span>Маленьке тату</span>
+    
+                        </div>
+    
+                    </div>
+    
+                    <div class="appointment-time">
+    
+                        13:00
+    
+                    </div>
+    
+                    <div class="appointment-status confirmed">
+    
+                        Підтверджено
+    
+                    </div>
+    
+                    <a href="#" class="open-btn">
+    
+                        Відкрити
+    
+                    </a>
+    
+                </div>
+    
+                <div class="appointment-card">
+    
+                    <div class="appointment-user">
+    
+                        <div class="avatar">
+                            І
+                        </div>
+    
+                        <div>
+    
+                            <h3>Іван</h3>
+    
+                            <span>Консультація</span>
+    
+                        </div>
+    
+                    </div>
+    
+                    <div class="appointment-time">
+    
+                        14:30
+    
+                    </div>
+    
+                    <div class="appointment-status waiting">
+    
+                        Очікує
+    
+                    </div>
+    
+                    <a href="#" class="open-btn">
+    
+                        Відкрити
+    
+                    </a>
+    
+                </div>
+    
+                <div class="appointment-card">
+    
+                    <div class="appointment-user">
+    
+                        <div class="avatar">
+                            М
+                        </div>
+    
+                        <div>
+    
+                            <h3>Максим</h3>
+    
+                            <span>Корекція</span>
+    
+                        </div>
+    
+                    </div>
+    
+                    <div class="appointment-time">
+    
+                        16:00
+    
+                    </div>
+    
+                    <div class="appointment-status confirmed">
+    
+                        Підтверджено
+    
+                    </div>
+    
+                    <a href="#" class="open-btn">
+    
+                        Відкрити
+    
+                    </a>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </section>
+
+
+
+
+
+
+
+</body>
+</html>
