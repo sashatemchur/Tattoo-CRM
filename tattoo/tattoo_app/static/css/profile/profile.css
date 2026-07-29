@@ -1,3 +1,18 @@
+html,
+body{
+    margin:0;
+    padding:0;
+    width:100%;
+    overflow-x:hidden;
+    background:#090909;
+}
+
+
+
+
+
+
+
 .dashboard{
 
     padding:140px 0 80px;
@@ -162,25 +177,7 @@
 
 }
 
-.balance-card{
 
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:60px;
-
-    background:#111;
-
-    border:1px solid #1d1d1d;
-
-    border-radius:24px;
-
-    padding:50px;
-
-}
 
 .balance-card:hover{
 
@@ -214,16 +211,27 @@
 
 }
 
-.balance-info{
+.balance-card{
 
     display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:60px;
 
-    gap:50px;
-
-    margin-top:40px;
+    background:#111;
+    border:1px solid #1d1d1d;
+    border-radius:24px;
+    padding:50px;
 
 }
 
+.balance-info{
+
+    display:flex;
+    gap:50px;
+    margin-top:40px;
+
+}
 .balance-info h3{
 
     color:#d4a762;
@@ -561,6 +569,256 @@
 }
 
 
+.quick-actions{
+
+    padding:100px 0;
+
+    background:#0d0d0d;
+
+}
+
+.quick-actions .section-header{
+
+    text-align:center;
+
+    margin-bottom:60px;
+
+}
+
+.quick-actions .section-header h2{
+
+    font-size:48px;
+
+    color:white;
+
+    margin-bottom:15px;
+
+}
+
+.quick-actions .section-header p{
+
+    color:#999;
+
+    font-size:18px;
+
+}
+
+.actions-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    gap:25px;
+
+}
+
+.action-card{
+
+    background:#111;
+
+    border:1px solid #1f1f1f;
+
+    border-radius:20px;
+
+    padding:40px 25px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+}
+
+.action-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#d4a762;
+
+    box-shadow:0 0 35px rgba(212,167,98,.18);
+
+}
+
+.action-icon{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:20px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:36px;
+
+    background:#1a1a1a;
+
+    margin-bottom:25px;
+
+    transition:.35s;
+
+}
+
+.action-card:hover .action-icon{
+
+    background:#d4a762;
+
+    transform:scale(1.08);
+
+}
+
+.action-card h3{
+
+    color:white;
+
+    margin-bottom:12px;
+
+    font-size:22px;
+
+}
+
+.action-card span{
+
+    color:#9b9b9b;
+
+    line-height:1.6;
+
+}
+
+@media(max-width:1100px){
+
+    .actions-grid{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .actions-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .quick-actions .section-header h2{
+
+        font-size:36px;
+
+    }
+
+}
+
+
+
+
+
+
+.reminders{
+
+    padding:100px 0;
+
+    background:#090909;
+
+}
+
+.reminders-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:25px;
+
+}
+
+.reminder-card{
+
+    background:#111;
+
+    border:1px solid #1d1d1d;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    transition:.3s;
+
+}
+
+.reminder-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#d4a762;
+
+}
+
+.reminder-top{
+
+    margin-bottom:20px;
+
+}
+
+.reminder-top span{
+
+    color:#d4a762;
+
+    font-size:14px;
+
+    letter-spacing:1px;
+
+}
+
+.reminder-card h3{
+
+    color:white;
+
+    margin-bottom:15px;
+
+    font-size:24px;
+
+}
+
+.reminder-card p{
+
+    color:#999;
+
+    line-height:1.7;
+
+}
+
+.urgent{
+
+    border:1px solid #b54141;
+
+}
+
+.urgent:hover{
+
+    border-color:#ff5c5c;
+
+}
+
+@media(max-width:900px){
+
+    .reminders-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
 
 
 
@@ -601,8 +859,168 @@
 
 
 
+/* ==========================
+   Dashboard Responsive
+========================== */
 
+.dashboard-container{
+    width:100%;
+    max-width:1600px;
+    margin:0 auto;
+    padding:110px 40px 40px;
+}
 
+.dashboard-header{
+    margin-bottom:40px;
+}
 
+.dashboard-header h1{
+    font-size:54px;
+}
 
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
 
+.balance-section{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:40px;
+}
+
+.balance-chart{
+    flex:0 0 320px;
+}
+
+/* ---------- Планшет ---------- */
+
+@media (max-width:1200px){
+
+    .dashboard-container{
+        padding:100px 25px 30px;
+    }
+
+    .dashboard-header h1{
+        font-size:42px;
+    }
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .balance-section{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .balance-chart{
+        width:100%;
+        flex:none;
+    }
+
+}
+
+/* ---------- Телефон ---------- */
+
+@media (max-width:768px){
+
+    .dashboard-container{
+        padding:95px 18px 25px;
+    }
+
+    .dashboard-header h1{
+        font-size:34px;
+    }
+
+    .dashboard-header p{
+        font-size:15px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        width:100%;
+    }
+
+    .balance-section{
+        flex-direction:column;
+        gap:30px;
+    }
+
+    .balance-chart{
+        width:100%;
+        display:flex;
+        justify-content:center;
+    }
+
+    .quick-actions{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:15px;
+    }
+
+}
+
+/* ---------- Маленькі телефони ---------- */
+
+@media (max-width:480px){
+
+    .dashboard-container{
+        padding:90px 12px 20px;
+    }
+
+    .dashboard-header h1{
+        font-size:28px;
+    }
+
+    .quick-actions{
+        grid-template-columns:1fr;
+    }
+
+}
+/* ---------- Планшет ---------- */
+
+@media (max-width:992px){
+
+    .balance-card{
+
+        flex-direction:column;
+        align-items:flex-start;
+        gap:35px;
+
+    }
+
+    .balance-info{
+
+        width:100%;
+        justify-content:space-between;
+        gap:20px;
+        flex-wrap:wrap;
+
+    }
+
+}
+
+/* ---------- Телефон ---------- */
+
+@media (max-width:768px){
+
+    .balance-card{
+
+        padding:25px;
+
+    }
+
+    .balance-info{
+
+        flex-direction:column;
+        gap:18px;
+
+    }
+
+}
