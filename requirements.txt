@@ -13,5 +13,4 @@ httpx
 qrcode
 python-barcode
 Pillow
-
 python-decouple

@@ -163,6 +163,166 @@ body{
 
 
 
+.dashboard-topbar{
+
+    max-width:1600px;
+    margin:0 auto;
+
+    padding:25px 45px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+.home-btn{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:12px 22px;
+
+    border:1px solid #2a2a2a;
+    border-radius:14px;
+
+    color:white;
+    text-decoration:none;
+
+    background:#111;
+
+    transition:.3s;
+
+}
+
+.home-btn:hover{
+
+    border-color:#d4a762;
+    color:#d4a762;
+
+}
+
+.topbar-right{
+
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+}
+
+.notification-btn{
+
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+    border:1px solid #2a2a2a;
+
+    background:#111;
+    color:white;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.notification-btn:hover{
+
+    border-color:#d4a762;
+    color:#d4a762;
+
+}
+
+.profile-circle{
+
+    width:54px;
+    height:54px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-decoration:none;
+
+    background:#111;
+    border:2px solid #d4a762;
+
+    color:#d4a762;
+
+    font-size:22px;
+
+    transition:.3s;
+
+}
+
+.profile-circle:hover{
+
+    background:#d4a762;
+    color:#111;
+
+}
+
+
+
+
+
+@media(max-width:768px){
+
+    .dashboard-topbar{
+
+        padding:20px 18px;
+
+    }
+
+    .home-btn span{
+
+        display:none;
+
+    }
+
+    .home-btn{
+
+        width:48px;
+        height:48px;
+
+        justify-content:center;
+
+        padding:0;
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -867,7 +1027,8 @@ body{
     width:100%;
     max-width:1600px;
     margin:0 auto;
-    padding:110px 40px 40px;
+    padding:110px 20px 40px;
+    box-sizing:border-box;
 }
 
 .dashboard-header{

@@ -261,3 +261,8 @@ span a:hover{
 
     text-decoration:underline;
 }
+
+
+.error-p {
+    color: red;
+}

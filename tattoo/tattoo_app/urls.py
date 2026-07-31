@@ -10,6 +10,7 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('', views.main, name='main'),
     path('sign-up/', views.sign_up, name='sign_up'),
+    path('sign-up/code/', views.sign_up_code, name='sign_up_code'),
     path('sign-in/', views.sign_in, name='sign_in'),
     path('profile/', views.profile, name='profile'),
 ]

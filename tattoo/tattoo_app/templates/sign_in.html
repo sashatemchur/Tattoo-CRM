@@ -41,18 +41,20 @@
         керувати клієнтами, записами та фінансами.
     </p>
 
-    <form>
-
+    <form method="POST">
+        {% csrf_token %}
         <input
                 type="email"
-                placeholder="Email">
+                placeholder="Email"
+                name="email">
 
         <div class="password-box">
 
             <input
                     id="password"
                     type="password"
-                    placeholder="Пароль">
+                    placeholder="Пароль"
+                    name="password">
 
             <i class="fa-regular fa-eye"
                id="togglePassword"></i>
@@ -84,6 +86,10 @@
         </button>
 
     </form>
+
+    {% if error %}
+        <p class="error-p">{{ error }}</p>
+    {% endif %}
 
     <span>
 

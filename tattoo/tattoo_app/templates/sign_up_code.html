@@ -14,8 +14,8 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<link rel="stylesheet" href="{% static 'css/sign_up/sign_up.css' %}">
-    <link rel="stylesheet" href="{% static 'css/sign_up/sign_up.css' %}">
+<link rel="stylesheet" href="{% static 'css/sign_up_code/sign_up_code.css' %}">
+
 </head>
 
 <body>
@@ -34,36 +34,21 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <form method="POST">
 
         {% csrf_token %}
-        <input type="text" placeholder="Ім'я" name="name">
+        <input type="text" placeholder="Код" name="code">
 
-        <input type="email" placeholder="Email" name="email">
 
-        <div class="password-box">
-            <input
-                id="password"
-                type="password"
-                placeholder="Пароль"
-                name="password">
-        
-            <i class="fa-regular fa-eye toggle-password"></i>
-        </div>
-        
-        <div class="password-box">
-            <input
-                id="confirmPassword"
-                type="password"
-                placeholder="Підтвердіть пароль"
-                name="password_repeat">
-        
-            <i class="fa-regular fa-eye toggle-password"></i>
-        </div>
-
-        <label class="checkbox">
-            <input type="checkbox">
-            Я погоджуюсь з умовами використання
-        </label>
         {% if error %}
-            <p class="error-p">{{ error }}</p>
+        <div class="error-box">
+        
+            <p class="error-p">
+                {{ error }}
+            </p>
+        
+            <a href="/sign-up/" class="error-btn">
+                Повернутись до реєстрації
+            </a>
+        
+        </div>
         {% endif %}
 
         <button>

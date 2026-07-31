@@ -3,7 +3,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Sign Up | TattooCRM</title>
+    <title>Profile | TattooCRM</title>
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,31 @@
 </head>
 
 <body>
+
+    <div class="dashboard-topbar">
+
+        <a href="/" class="home-btn">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+    
+        <div class="topbar-right">
+    
+            <button class="notification-btn">
+                <i class="fa-regular fa-bell"></i>
+            </button>
+    
+            <a href="/profile/settings/" class="profile-circle">
+                <i class="fa-regular fa-user"></i>
+            </a>
+    
+        </div>
+    
+    </div>
+
+    
+
+
     <div class="dashboard-container">
 
         <section class="dashboard">
@@ -33,7 +58,7 @@
                         </span>
         
                         <h1>
-                            Доброго дня, Олександр 👋
+                            Доброго дня, {{ name }} 👋
                         </h1>
         
                         <p>
