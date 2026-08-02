@@ -127,6 +127,21 @@ def sign_in(request):
     
     return render(request, 'sign_in.html')
     
+
+
+def sign_in_password_recovery(request):
+    if request.method == "POST": 
+        ...
+    
+
+    context = {"email": "email"}
+    return render(request, 'forgot_password.html', context)
+    
+
+
+
+
+    
 @login_required
 def profile(request):
     print(request.user)
