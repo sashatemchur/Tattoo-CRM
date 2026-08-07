@@ -66,3 +66,7 @@ def login_user(request, email, password):
         return False
 
     
+def change_password(email, new_password):
+    user = User.objects.get(email=email)
+    user.set_password(new_password)
+    user.save()

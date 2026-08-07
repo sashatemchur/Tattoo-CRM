@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 from asgiref.sync import async_to_sync 
 
-from .db_orm import create_user, check_repeat_email, login_user
+from .db_orm import create_user, check_repeat_email, login_user, change_password
 #import aiohttp
 #import threading
 from decouple import config
@@ -29,6 +29,21 @@ def send_verify_code(email):
     send_mail(
         subject="TattooCRM — Код підтвердження",
         message=f"Вітаємо!\n\nДякуємо за реєстрацію в TattooCRM.\n\nДля підтвердження вашої електронної пошти введіть наступний код:\n\n{code}\n\nКод дійсний протягом 10 хвилин.\n\nЯкщо ви не реєструвалися в TattooCRM, просто проігноруйте цей лист.\n\nЗ повагою,\nКоманда TattooCRM",
+        from_email=None,
+        recipient_list=[email],
+    )
+
+    return code
+
+
+
+def send_recovery_code(email):
+
+    code = random.randint(1000000, 9999999)
+
+    send_mail(
+        subject = "TattooCRM — Відновлення пароля",
+        message=f"Вітаємо!\n\nМи отримали запит на відновлення пароля до вашого облікового запису TattooCRM.\n\nДля підтвердження цієї дії введіть наступний код:\n\n{code}\n\nКод дійсний протягом 10 хвилин.\n\nЯкщо ви не надсилали запит на відновлення пароля, просто проігноруйте цей лист. Ваш акаунт залишиться захищеним.\n\nЗ повагою,\nКоманда TattooCRM\n",
         from_email=None,
         recipient_list=[email],
     )
@@ -131,10 +146,69 @@ def sign_in(request):
 
 def sign_in_password_recovery(request):
     if request.method == "POST": 
-        ...
-    
+        email = request.POST.get("email")
+        code = request.POST.get("code")
+        password = request.POST.get("password")
+        password_repeat = request.POST.get("password_repeat")
+        
+        if email:
+            
+            code = send_recovery_code(email)
 
-    context = {"email": "email"}
+            request.session["password_recovery"] = {
+                "email": email,
+                "code": code,
+                "created": datetime.now().timestamp(),
+            }
+            
+            
+            context = {"code": True}
+            return render(request, 'forgot_password.html', context)
+
+
+        elif code:
+
+            data_user = request.session.get("password_recovery")
+
+            if datetime.now().timestamp() - data_user["created"] > 600:
+                del request.session["password_recovery"]
+                context = {"email": True, "error": "Вийшов термін дії коду, надішліть знову"}
+                return render(request, 'forgot_password.html', context)
+            else:
+                try:
+                    if int(data_user["code"]) == int(code):
+                        context = {"password": True}
+                        return render(request, 'forgot_password.html', context)
+                    else:
+                        del request.session["password_recovery"]
+                        context = {"email": True, "error": "Неправильний код, спробуйте перевірити email"}
+                        return render(request, 'forgot_password.html', context)
+                except:
+                    ...
+
+            
+
+        elif password:
+
+            data_user = request.session.get("password_recovery")
+
+            if password == password_repeat:
+                change_password(data_user["email"], password)
+                user = login_user(request, data_user["email"], password)
+
+                if user != False:
+                    login(request, user)
+                    del request.session["password_recovery"]
+                    return redirect("/profile/")
+                else:
+                    del request.session["password_recovery"]
+                    context = {
+                        "email": True,
+                        "error": "Помилка авторизації."
+                    }
+                    return render(request, 'forgot_password.html', context)
+
+    context = {"email": True}
     return render(request, 'forgot_password.html', context)
     
 
