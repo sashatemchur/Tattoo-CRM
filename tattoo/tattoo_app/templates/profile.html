@@ -28,15 +28,55 @@
         </a>
     
         <div class="topbar-right">
-    
+
             <button class="notification-btn">
                 <i class="fa-regular fa-bell"></i>
             </button>
-    
-            <a href="/profile/settings/" class="profile-circle">
-                <i class="fa-regular fa-user"></i>
-            </a>
-    
+        
+            <div class="profile-menu">
+        
+                <button class="profile-circle" id="profileBtn">
+                    <i class="fa-regular fa-user"></i>
+                </button>
+        
+                <div class="profile-dropdown" id="profileDropdown">
+        
+                    <div class="dropdown-header">
+                        <strong>{{ request.user.first_name }}</strong>
+                        <span>{{ request.user.email }}</span>
+                    </div>
+        
+                    <a href="/profile/">
+                        <i class="fa-regular fa-user"></i>
+                        Профіль
+                    </a>
+        
+                    <a href="/profile/settings/">
+                        <i class="fa-solid fa-gear"></i>
+                        Налаштування
+                    </a>
+        
+                    <a href="/calendar/">
+                        <i class="fa-regular fa-calendar"></i>
+                        Календар
+                    </a>
+        
+                    <a href="/balance/">
+                        <i class="fa-solid fa-wallet"></i>
+                        Баланс
+                    </a>
+        
+                    <hr>
+        
+                    <a href="/logout/" class="logout-link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Log out
+                    </a>
+        
+                </div>
+        
+            </div>
+        
         </div>
     
     </div>
@@ -520,7 +560,26 @@
         </section>
 
     </div>
+    <script>
+        const profileBtn = document.getElementById("profileBtn");
+        const dropdown = document.getElementById("profileDropdown");
 
+        profileBtn.addEventListener("click", function(e){
+
+            e.stopPropagation();
+
+            dropdown.classList.toggle("active");
+
+        });
+
+        document.addEventListener("click", function(e){
+
+            if(!dropdown.contains(e.target) && !profileBtn.contains(e.target)){
+                dropdown.classList.remove("active");
+            }
+
+        });
+    </script>
 
 </body>
 </html>

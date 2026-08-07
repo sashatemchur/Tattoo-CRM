@@ -21,6 +21,7 @@ from decouple import config
 from datetime import datetime
 from django.core.mail import send_mail
 
+from django.contrib.auth import logout
 
 def send_verify_code(email):
 
@@ -106,17 +107,17 @@ def sign_up_code(request):
 
 
         if datetime.now().timestamp() - data_user["created"] > 600:
-            del request.session["signup"]
+            request.session.pop("signup", None)
             context = { "error": "Вийшов термін дії коду, надішліть знову"}
             return render(request, 'sign_up_code.html', context)
         else:
             if int(data_user["code"]) == int(code):
                 user = create_user(data_user["name"], data_user["email"], data_user["password"])
                 login(request, user)
-                del request.session["signup"]
+                request.session.pop("signup", None)
                 return redirect("/profile/")
             else:
-                del request.session["signup"]
+                request.session.pop("signup", None)
                 context = { "error": "Неправильний код, спробуйте перевірити email"}
                 return render(request, 'sign_up_code.html', context)
 
@@ -171,7 +172,7 @@ def sign_in_password_recovery(request):
             data_user = request.session.get("password_recovery")
 
             if datetime.now().timestamp() - data_user["created"] > 600:
-                del request.session["password_recovery"]
+                request.session.pop("password_recovery", None)
                 context = {"email": True, "error": "Вийшов термін дії коду, надішліть знову"}
                 return render(request, 'forgot_password.html', context)
             else:
@@ -180,7 +181,7 @@ def sign_in_password_recovery(request):
                         context = {"password": True}
                         return render(request, 'forgot_password.html', context)
                     else:
-                        del request.session["password_recovery"]
+                        request.session.pop("password_recovery", None)
                         context = {"email": True, "error": "Неправильний код, спробуйте перевірити email"}
                         return render(request, 'forgot_password.html', context)
                 except:
@@ -198,10 +199,10 @@ def sign_in_password_recovery(request):
 
                 if user != False:
                     login(request, user)
-                    del request.session["password_recovery"]
+                    request.session.pop("password_recovery", None)
                     return redirect("/profile/")
                 else:
-                    del request.session["password_recovery"]
+                    request.session.pop("password_recovery", None)
                     context = {
                         "email": True,
                         "error": "Помилка авторизації."
@@ -222,3 +223,12 @@ def profile(request):
     context = {"name": request.user.first_name}
     return render(request, 'profile.html', context)
     
+
+
+
+def logout_user(request):
+    logout(request)
+    return redirect("/")
+
+
+
