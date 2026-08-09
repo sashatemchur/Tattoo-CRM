@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 from asgiref.sync import async_to_sync 
 
-from .db_orm import create_user, check_repeat_email, login_user, change_password
+from .db_orm import create_user, check_repeat_email, login_user, change_password, create_client, client_delete, search_clients
 #import aiohttp
 #import threading
 from decouple import config
@@ -231,4 +231,64 @@ def logout_user(request):
     return redirect("/")
 
 
+@login_required
+def add_client(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        surname = request.POST.get("surname")
+        telephone = request.POST.get("telephone")
+        date_birth = request.POST.get("date_birth") 
+        telegram = request.POST.get("telegram")
+        email = request.POST.get("email") 
+        client_source = request.POST.get("client_source")
+        allegria = "allegria" in request.POST
 
+        try:
+            create_client(name, surname, telephone, date_birth, telegram, email, client_source, allegria, request.user)
+        except:
+           return render(request, 'add_client.html', {"error": True})
+
+        return render(request, 'add_client.html', {"successfully": True})
+
+
+    return render(request, 'add_client.html')
+
+
+
+
+
+@login_required
+def clients(request):
+    search = request.GET.get("search")
+
+    if search:
+        clients = search_clients(search, request.user)
+    else:
+        clients = request.user.clients.all()
+
+    context = {
+        "clients": clients,
+        "clients_count": clients.count()
+    }
+
+    return render(request, "clients.html", context)
+
+
+
+
+
+@login_required
+def delete_client(request, id_client):
+    if request.method == "POST":
+        try:
+            client_delete(id_client, request.user)
+        except:
+            context = {"clients": request.user.clients.all(), "clients_count": len(request.user.clients.all()), "error": True}
+            return render(request, 'clients.html', context)
+
+
+        context = {"clients": request.user.clients.all(), "clients_count": len(request.user.clients.all()), "successfully": True}
+        return render(request, 'clients.html', context)
+
+    context = {"clients": request.user.clients.all(), "clients_count": len(request.user.clients.all())}
+    return render(request, 'clients.html', context)

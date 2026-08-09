@@ -10,11 +10,11 @@ if PROJECT_ROOT not in sys.path:
 
 # Вказуємо settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tattoo.settings")
-
+import re
 # Запускаємо Django
 django.setup()
 from asgiref.sync import sync_to_async
-from tattoo_app.models import User
+from tattoo_app.models import User, Client
 from asgiref.sync import async_to_sync 
 
 from django.contrib.auth import authenticate
@@ -70,3 +70,38 @@ def change_password(email, new_password):
     user = User.objects.get(email=email)
     user.set_password(new_password)
     user.save()
+
+
+
+
+def create_client(name, surname, telephone, date_birth, telegram, email, client_source, allegria, whose_client):
+    client = Client.objects.create(
+        name=name,
+        surname=surname,
+        telephone=telephone,
+        date_birth=date_birth or None,
+        telegram=telegram,
+        email=email,
+        client_source=client_source,
+        allegria=allegria,
+        whose_client=whose_client
+    )
+    return client
+
+
+def client_delete(id, whose_client):
+    client = Client.objects.get(id=id, whose_client=whose_client)
+    client.delete()
+
+
+def search_clients(search, whose_client):
+    if any(char.isdigit() for char in search):
+        search = re.sub(r"\D", "", search)
+        if search.isdigit():
+            clients = Client.objects.filter(telephone__icontains=search, whose_client=whose_client)
+            return clients
+    else:
+        clients = Client.objects.filter(name__icontains=search, whose_client=whose_client)
+        return clients
+
+

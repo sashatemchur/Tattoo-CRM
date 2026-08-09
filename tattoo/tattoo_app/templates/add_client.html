@@ -1,0 +1,262 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Client | TattooCRM</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{% static 'css/add_client/add_client.css' %}">
+</head>
+
+<body>
+
+<div class="client-page">
+
+    <div class="client-card">
+
+        <div class="page-header">
+
+            <a href="/profile/" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+
+            <div>
+                <h3 class="gold-title">TattooCRM</h3>
+                <h1>Новий клієнт</h1>
+                <p>Додайте нового клієнта до вашої бази.</p>
+            </div>
+
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="form-section">
+
+                <h2>
+                    <i class="fa-regular fa-user"></i>
+                    Основна інформація
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+                        <label for="name">Ім'я *</label>
+
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            placeholder="Ім'я"
+                            required>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label for="surname">Прізвище</label>
+
+                        <input
+                            id="surname"
+                            type="text"
+                            name="surname"
+                            placeholder="Прізвище">
+                    </div>
+
+
+                    <div class="input-group">
+                        <label for="telephone">Телефон *</label>
+
+                        <input
+                            id="telephone"
+                            type="tel"
+                            name="telephone"
+                            placeholder="+380 XX XXX XX XX"
+                            required>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label for="date_birth">Дата народження</label>
+
+                        <input
+                            id="date_birth"
+                            type="date"
+                            name="date_birth">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-section">
+
+                <h2>
+                    <i class="fa-solid fa-address-book"></i>
+                    Контактні дані
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="telegram">Telegram</label>
+
+                        <div class="input-with-icon">
+
+                            <i class="fa-brands fa-telegram"></i>
+
+                            <input
+                                id="telegram"
+                                type="text"
+                                name="telegram"
+                                placeholder="@username">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="email">Email</label>
+
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            placeholder="client@email.com">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-section">
+
+                <h2>
+                    <i class="fa-solid fa-circle-info"></i>
+                    Додаткова інформація
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="client_source">
+                            Звідки прийшов клієнт
+                        </label>
+
+                        <select
+                            id="client_source"
+                            name="client_source">
+
+                            <option value="">
+                                Оберіть джерело
+                            </option>
+
+                            <option value="instagram">
+                                Instagram
+                            </option>
+
+                            <option value="telegram">
+                                Telegram
+                            </option>
+
+                            <option value="recommendation">
+                                Рекомендація
+                            </option>
+
+                            <option value="advertising">
+                                Реклама
+                            </option>
+
+                            <option value="website">
+                                Сайт
+                            </option>
+
+                            <option value="other">
+                                Інше
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group allergy-group">
+
+                        <label>Алергії</label>
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                name="allegria"
+                                value="True">
+
+                            <span class="slider"></span>
+
+                            <span class="switch-text">
+                                Є алергії
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <p> Поля (Ім'я та Телефон) є обов'язковими</p>
+            {% if successfully %} 
+                <p class="p_successfully">Клієнт успішно доданий</p>
+            {% endif %} 
+            {% if error %} 
+                <p class="p_error">Виникла помилка спробуйте ще раз. Можливо клієнт з таким номером телефону вже існує</p>
+            {% endif %} 
+
+            <div class="form-actions">
+
+                <a href="/profile/" class="cancel-btn">
+                    Скасувати
+                </a>
+
+                <button type="submit" class="save-btn">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    Додати клієнта
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,324 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clients | TattooCRM</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/clients/clients.css' %}"
+    >
+</head>
+
+<body>
+
+<div class="clients-page">
+
+    <!-- TOPBAR -->
+
+    <div class="dashboard-topbar">
+
+        <a href="/" class="home-btn">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+
+        <div class="topbar-title">
+            <span>TattooCRM</span>
+        </div>
+
+        <div class="topbar-right">
+
+
+            <a href="/profile/" class="profile-circle">
+                <i class="fa-regular fa-user"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- HEADER -->
+
+    <div class="clients-header">
+
+        <div>
+
+            <span class="gold-title">
+                TattooCRM
+            </span>
+
+            <h1>Мої клієнти</h1>
+
+            <p>
+                Керуйте клієнтами, переглядайте їх інформацію
+                та історію взаємодій.
+            </p>
+
+        </div>
+
+        <a href="/profile/add_client/" class="add-client-btn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Новий клієнт
+
+        </a>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div>
+                <span>Всього клієнтів</span>
+                <strong>{{ clients_count }}</strong>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="clients-tools">
+
+        <form method="GET" class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Пошук за ім'ям або телефоном..."
+                value="{{ search }}"
+            >
+
+        </form>
+
+
+    </div>
+
+
+    <!-- CLIENTS -->
+
+    <div class="clients-list">
+
+        {% for client in clients %}
+
+        <div class="client-card">
+
+            <div class="client-avatar">
+
+                {{ client.name|first|upper }}
+
+            </div>
+
+
+            <div class="client-main">
+
+                <div class="client-name-row">
+
+                    <h2>
+                        {{ client.name }}
+                        {{ client.surname }}
+                    </h2>
+
+                    {% if client.allegria %}
+
+                    <span class="allergy-badge">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        Алергія
+
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="client-info">
+
+                    {% if client.telephone %}
+
+                    <span>
+                        <i class="fa-solid fa-phone"></i>
+                        {{ client.telephone }}
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if client.email %}
+
+                    <span>
+                        <i class="fa-solid fa-envelope"></i>
+                        {{ client.email }}
+                    </span>
+
+                    {% endif %}
+
+
+                    {% if client.telegram %}
+
+                    <span>
+                        <i class="fa-brands fa-telegram"></i>
+                        {{ client.telegram }}
+                    </span>
+
+                    {% endif %}
+
+                    {% if client.date_birth %}
+
+                    <span>
+                        <i class="fa-solid fa-cake-candles"></i>
+                        {{ client.date_birth }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="client-meta">
+
+                    <span>
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        Доданий:
+                        {{ client.created_at|date:"d.m.Y" }}
+
+                    </span>
+
+
+                    {% if client.client_source %}
+
+                    <span>
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        {{ client.client_source }}
+
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="client-actions">
+
+
+                <a
+                    href="#"
+                    class="edit-btn"
+                    title="Редагувати"
+                >
+
+                    <i class="fa-regular fa-pen-to-square"></i>
+
+                </a>
+
+
+                <form
+                    method="POST"
+                    action="/profile/client/{{ client.id }}/delete/"
+                    onsubmit="return confirm('Ви точно хочете видалити цього клієнта?');"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="delete-btn"
+                        title="Видалити"
+                    >
+
+                        <i class="fa-regular fa-trash-can"></i>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+            <h2>Клієнтів поки немає</h2>
+
+            <p>
+                Додайте свого першого клієнта,
+                щоб почати вести базу.
+            </p>
+
+            <a href="/profile/add_client/" class="add-client-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Додати клієнта
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+    {% if successfully %}   
+        <p class="p_successfully">Клієнт успішно видалений</p>
+    {% endif %}
+
+    {% if error %}   
+        <p class="p_error">Виникла помилка</p>
+    {% endif %}
+
+    
+</div>
+
+</body>
+</html>

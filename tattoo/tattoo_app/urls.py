@@ -15,6 +15,9 @@ urlpatterns = [
     path('sign-in/password-recovery/', views.sign_in_password_recovery, name='sign_in_password_recovery'),
     path('logout/', views.logout_user, name='logout_user'),
     path('profile/', views.profile, name='profile'),
+    path('profile/add_client/', views.add_client, name='add_client'),
+    path('profile/clients/', views.clients, name='clients'),
+    path('profile/client/<int:id_client>/delete/', views.delete_client, name='delete_client'),
 ]
 
 if settings.DEBUG:
