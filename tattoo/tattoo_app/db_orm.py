@@ -19,6 +19,9 @@ from asgiref.sync import async_to_sync
 
 from django.contrib.auth import authenticate
 
+import re
+from django.db.models import Q
+
 #@sync_to_async
 #def create_user_base_places_exhibitions(chat_id_message, list_info):
 #    users = BasePlacesUserExhibitions(chat_id=chat_id_message, base_places_terroir_and_traditions=list_info[0], base_places_collection_co_selection=list_info[1], base_places_snucie=list_info[2],
@@ -102,6 +105,19 @@ def search_clients(search, whose_client):
             return clients
     else:
         clients = Client.objects.filter(name__icontains=search, whose_client=whose_client)
+        return clients
+
+
+
+
+def search_clients_with_surname(search, whose_client):
+    if any(char.isdigit() for char in search):
+        search = re.sub(r"\D", "", search)
+        if search.isdigit():
+            clients = Client.objects.filter(telephone__icontains=search, whose_client=whose_client)
+            return clients
+    else:
+        clients = Client.objects.filter(Q(name__icontains=search) | Q(surname__icontains=search), whose_client=whose_client)
         return clients
 
 

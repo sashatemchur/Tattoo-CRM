@@ -18,6 +18,8 @@ urlpatterns = [
     path('profile/add_client/', views.add_client, name='add_client'),
     path('profile/clients/', views.clients, name='clients'),
     path('profile/client/<int:id_client>/delete/', views.delete_client, name='delete_client'),
+    path('profile/new-session/', views.new_session, name='new_session'),
+    path('profile/clients/search/', views.clients_search, name='clients_search'),
 ]
 
 if settings.DEBUG:

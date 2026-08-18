@@ -35,3 +35,23 @@ class Client(models.Model):
             )
         ]
 
+
+
+class Appointments(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="appointments")
+    date_session = models.DateField("Date of session")
+    time_start = models.TimeField("Time start")  
+    duration_minutes = models.IntegerField("Duration minutes") 
+    price = models.DecimalField("Price", max_digits=8, decimal_places=2) 
+    service = models.CharField('Service', max_length = 500)
+    notes = models.CharField('Notes', max_length = 500, blank=True)
+
+
+    def __str__(self):
+        return self.client.name
+
+    
+    class Meta:
+        verbose_name = "appointment"
+        verbose_name_plural = "appointments"
+

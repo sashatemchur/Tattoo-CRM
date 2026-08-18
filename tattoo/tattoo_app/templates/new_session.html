@@ -1,0 +1,826 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Новий запис | TattooCRM</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{% static 'css/new_session/new_session.css' %}">
+</head>
+
+<body>
+
+<div class="appointment-page">
+
+    <div class="appointment-box">
+
+        <a href="/profile/" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Назад
+        </a>
+
+
+        <div class="header">
+
+            <div class="header-icon">
+                <i class="fa-regular fa-calendar-plus"></i>
+            </div>
+
+            <div>
+                <h1>Новий запис</h1>
+                <p>Створіть новий запис для клієнта</p>
+            </div>
+
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- ВИБІР КЛІЄНТА -->
+
+            <div class="form-section">
+
+                <h3>Клієнт</h3>
+
+                <div class="client-type">
+
+                    <label class="radio-card">
+
+                        <input
+                                type="radio"
+                                name="client_type"
+                                value="existing"
+                                checked>
+
+                        <span class="radio-custom"></span>
+
+                        <div>
+                            <strong>Існуючий клієнт</strong>
+                            <small>Вибрати клієнта з CRM</small>
+                        </div>
+
+                    </label>
+
+
+                    <label class="radio-card">
+
+                        <input
+                                type="radio"
+                                name="client_type"
+                                value="new">
+
+                        <span class="radio-custom"></span>
+
+                        <div>
+                            <strong>Новий клієнт</strong>
+                            <small>Створити нового клієнта</small>
+                        </div>
+
+                    </label>
+
+                </div>
+
+
+                <!-- ІСНУЮЧИЙ КЛІЄНТ -->
+
+                <div id="existing-client" class="client-block">
+
+                    <div class="input-group">
+                
+                        <label for="client-search">
+                            Пошук клієнта
+                        </label>
+                
+                        <div class="search-box">
+                
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                
+                            <input
+                                    id="client-search"
+                                    type="text"
+                                    placeholder="Ім'я, прізвище або номер телефону..."
+                                    autocomplete="off">
+                
+                        </div>
+                
+                    </div>
+                
+                
+                    <!-- Сюди JS буде додавати результати -->
+                
+                    <div id="client-results" class="client-results"></div>
+                
+                
+                    <!-- ID вибраного клієнта піде в POST -->
+                
+                    <input
+                            type="hidden"
+                            name="client"
+                            id="selected-client">
+                
+                
+                    <!-- Інформація про вибраного клієнта -->
+                
+                    <div
+                            id="selected-client-info"
+                            class="selected-client-info hidden">
+                
+                        <div class="selected-client-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                
+                        <div class="selected-client-text">
+                
+                            <strong id="selected-client-name"></strong>
+                
+                            <span id="selected-client-phone"></span>
+                
+                        </div>
+                
+                        <button
+                                type="button"
+                                id="remove-client"
+                                class="remove-client">
+                
+                            <i class="fa-solid fa-xmark"></i>
+                
+                        </button>
+                
+                    </div>
+                
+                </div>
+
+
+                <!-- НОВИЙ КЛІЄНТ -->
+
+                <div id="new-client" class="client-block hidden">
+
+                    <div class="form-grid">
+
+                        <div class="input-group">
+
+                            <label for="name">
+                                Ім'я *
+                            </label>
+
+                            <input
+                                    id="name"
+                                    type="text"
+                                    name="name"
+                                    placeholder="Ім'я">
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="surname">
+                                Прізвище
+                            </label>
+
+                            <input
+                                    id="surname"
+                                    type="text"
+                                    name="surname"
+                                    placeholder="Прізвище">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="input-group">
+
+                            <label for="telephone">
+                                Телефон *
+                            </label>
+
+                            <input
+                                    id="telephone"
+                                    type="tel"
+                                    name="telephone"
+                                    placeholder="+380...">
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="email">
+                                Email
+                            </label>
+
+                            <input
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    placeholder="example@gmail.com">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="input-group">
+
+                            <label for="telegram">
+                                Telegram / Instagram
+                            </label>
+
+                            <input
+                                    id="telegram"
+                                    type="text"
+                                    name="telegram"
+                                    placeholder="@username">
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="date_birth">
+                                Дата народження
+                            </label>
+
+                            <input
+                                    id="date_birth"
+                                    type="date"
+                                    name="date_birth">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="client_source">
+                            Джерело клієнта
+                        </label>
+
+                        <select
+                                id="client_source"
+                                name="client_source">
+
+                            <option value="">
+                                Не вказано
+                            </option>
+
+                            <option value="Instagram">
+                                Instagram
+                            </option>
+
+                            <option value="Telegram">
+                                Telegram
+                            </option>
+
+                            <option value="Google">
+                                Google
+                            </option>
+
+                            <option value="Рекомендація">
+                                Рекомендація
+                            </option>
+
+                            <option value="Інше">
+                                Інше
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <label class="checkbox">
+
+                        <input
+                                type="checkbox"
+                                name="allegria">
+
+                        <span>
+                            У клієнта є алергії
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- ДЕТАЛІ ЗАПИСУ -->
+
+            <div class="form-section">
+
+                <h3>Деталі запису</h3>
+
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="date">
+                            Дата *
+                        </label>
+
+                        <input
+                                id="date"
+                                type="date"
+                                name="date"
+                                required>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="time">
+                            Час початку *
+                        </label>
+
+                        <input
+                                id="time"
+                                type="time"
+                                name="time"
+                                required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="duration">
+                            Тривалість *
+                        </label>
+
+                        <select
+                                id="duration"
+                                name="duration"
+                                required>
+
+                            <option value="" disabled selected>
+                                Оберіть тривалість
+                            </option>
+
+                            <option value="30">
+                                30 хвилин
+                            </option>
+
+                            <option value="60">
+                                1 година
+                            </option>
+
+                            <option value="90">
+                                1 година 30 хвилин
+                            </option>
+
+                            <option value="120">
+                                2 години
+                            </option>
+
+                            <option value="180">
+                                3 години
+                            </option>
+
+                            <option value="240">
+                                4 години
+                            </option>
+
+                            <option value="300">
+                                5 годин
+                            </option>
+
+                            <option value="360">
+                                6 годин
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="price">
+                            Вартість, ₴ *
+                        </label>
+
+                        <input
+                                id="price"
+                                type="number"
+                                name="price"
+                                min="0"
+                                step="0.01"
+                                placeholder="3000"
+                                required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="service">
+                        Послуга *
+                    </label>
+
+                    <input
+                            id="service"
+                            type="text"
+                            name="service"
+                            placeholder="Наприклад: Тату на передпліччі"
+                            required>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="notes">
+                        Нотатки
+                    </label>
+
+                    <textarea
+                            id="notes"
+                            name="notes"
+                            rows="5"
+                            placeholder="Додаткова інформація про запис..."></textarea>
+
+                </div>
+
+            </div>
+
+
+            {% if error %}
+
+                <p class="error-p">
+                    {{ error }}
+                </p>
+
+            {% endif %}
+
+
+            {% if successfully %}
+
+                <p class="success-p">
+                    Запис успішно створено!
+                </p>
+
+            {% endif %}
+
+
+            <button
+                    type="submit"
+                    class="submit-btn">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                Створити запис
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const clientTypes = document.querySelectorAll(
+    'input[name="client_type"]'
+);
+
+const existingClient = document.getElementById(
+    "existing-client"
+);
+
+const newClient = document.getElementById(
+    "new-client"
+);
+
+const clientSelect = document.getElementById(
+    "client"
+);
+
+
+clientTypes.forEach(function(radio) {
+
+    radio.addEventListener("change", function() {
+
+        if (this.value === "new") {
+
+            existingClient.classList.add("hidden");
+            newClient.classList.remove("hidden");
+
+            clientSelect.removeAttribute("required");
+
+        }
+
+        if (this.value === "existing") {
+
+            newClient.classList.add("hidden");
+            existingClient.classList.remove("hidden");
+
+            clientSelect.setAttribute("required", "required");
+
+        }
+
+    });
+
+});
+
+
+
+
+
+
+</script>
+<script>
+
+    const searchInput = document.getElementById("client-search");
+    
+    const resultsBox = document.getElementById("client-results");
+    
+    const selectedClient = document.getElementById("selected-client");
+    
+    const selectedClientInfo =
+        document.getElementById("selected-client-info");
+    
+    const selectedClientName =
+        document.getElementById("selected-client-name");
+    
+    const selectedClientPhone =
+        document.getElementById("selected-client-phone");
+    
+    const removeClient =
+        document.getElementById("remove-client");
+    
+    
+    let searchTimeout;
+    
+    
+    // Користувач щось вводить
+    
+    searchInput.addEventListener("input", function () {
+    
+        const search = this.value.trim();
+    
+    
+        // Якщо менше 2 символів — нічого не шукаємо
+    
+        if (search.length < 2) {
+    
+            resultsBox.innerHTML = "";
+    
+            resultsBox.classList.remove("show");
+    
+            return;
+    
+        }
+    
+    
+        // Невелика затримка, щоб не робити запит
+        // після кожної натиснутої клавіші
+    
+        clearTimeout(searchTimeout);
+    
+    
+        searchTimeout = setTimeout(function () {
+    
+            searchClients(search);
+    
+        }, 300);
+    
+    });
+    
+    
+    
+    async function searchClients(search) {
+    
+        resultsBox.innerHTML = `
+            <div class="search-loading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Пошук...
+            </div>
+        `;
+    
+        resultsBox.classList.add("show");
+    
+    
+        try {
+    
+            const response = await fetch(
+                `/profile/clients/search/?q=${encodeURIComponent(search)}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                }
+            );
+    
+    
+            if (!response.ok) {
+    
+                throw new Error("Помилка запиту");
+    
+            }
+    
+    
+            const clients = await response.json();
+    
+    
+            resultsBox.innerHTML = "";
+    
+    
+            if (clients.length === 0) {
+    
+                resultsBox.innerHTML = `
+                    <div class="no-results">
+                        Клієнтів не знайдено
+                    </div>
+                `;
+    
+                return;
+    
+            }
+    
+    
+            clients.forEach(function (client) {
+    
+                const item = document.createElement("button");
+    
+                item.type = "button";
+    
+                item.classList.add("client-result");
+    
+    
+                item.innerHTML = `
+    
+                    <div class="client-result-icon">
+    
+                        <i class="fa-solid fa-user"></i>
+    
+                    </div>
+    
+                    <div class="client-result-info">
+    
+                        <strong>
+                            ${client.name} ${client.surname || ""}
+                        </strong>
+    
+                        <span>
+                            ${client.telephone}
+                        </span>
+    
+                    </div>
+    
+                `;
+    
+    
+                item.addEventListener("click", function () {
+    
+                    selectClient(client);
+    
+                });
+    
+    
+                resultsBox.appendChild(item);
+    
+            });
+    
+    
+        } catch (error) {
+    
+            console.error(error);
+    
+    
+            resultsBox.innerHTML = `
+                <div class="no-results">
+                    Помилка під час пошуку
+                </div>
+            `;
+    
+        }
+    
+    }
+    
+    
+    
+    function selectClient(client) {
+    
+        // Записуємо ID клієнта
+        // саме це піде на Django
+    
+        selectedClient.value = client.id;
+    
+    
+        // Показуємо вибраного клієнта
+    
+        selectedClientName.textContent =
+            `${client.name} ${client.surname || ""}`;
+    
+    
+        selectedClientPhone.textContent =
+            client.telephone;
+    
+    
+        selectedClientInfo.classList.remove("hidden");
+    
+    
+        // Ховаємо результати
+    
+        resultsBox.innerHTML = "";
+    
+        resultsBox.classList.remove("show");
+    
+    
+        // Очищаємо пошук
+    
+        searchInput.value = "";
+    
+    
+        // Більше не треба вибирати клієнта
+    
+        searchInput.disabled = true;
+    
+    }
+    
+    
+    
+    // Видалити вибраного клієнта
+    
+    removeClient.addEventListener("click", function () {
+    
+        selectedClient.value = "";
+    
+        selectedClientInfo.classList.add("hidden");
+    
+        searchInput.disabled = false;
+    
+        searchInput.focus();
+    
+    });
+    
+    
+    
+    /*
+        Якщо користувач переключився
+        на "Новий клієнт",
+        очищаємо старого клієнта.
+    */
+    
+    document
+        .querySelectorAll('input[name="client_type"]')
+        .forEach(function (radio) {
+    
+            radio.addEventListener("change", function () {
+    
+                if (this.value === "new") {
+    
+                    selectedClient.value = "";
+    
+                    selectedClientInfo.classList.add("hidden");
+    
+                    searchInput.value = "";
+    
+                    searchInput.disabled = false;
+    
+                    resultsBox.innerHTML = "";
+    
+                }
+    
+            });
+    
+        });
+    
+    </script>
+</body>
+</html>

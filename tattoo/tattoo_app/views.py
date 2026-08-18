@@ -7,6 +7,8 @@ import httpx, asyncio
 import json
 import requests
 
+from django.http import JsonResponse
+
 import random
 
 from django.contrib.auth import login
@@ -14,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 
 from asgiref.sync import async_to_sync 
 
-from .db_orm import create_user, check_repeat_email, login_user, change_password, create_client, client_delete, search_clients
+from .db_orm import create_user, check_repeat_email, login_user, change_password, create_client, client_delete, search_clients, search_clients_with_surname
 #import aiohttp
 #import threading
 from decouple import config
@@ -292,3 +294,30 @@ def delete_client(request, id_client):
 
     context = {"clients": request.user.clients.all(), "clients_count": len(request.user.clients.all())}
     return render(request, 'clients.html', context)
+
+
+
+
+@login_required
+def new_session(request):
+    if request.method == "POST":
+        data = request.POST.dict()
+        print(data)
+
+    context = {"clients": request.user.clients.all(), "clients_count": len(request.user.clients.all())}
+    return render(request, 'new_session.html', context)
+
+
+
+
+@login_required
+def clients_search(request):
+    search = request.GET.get("q")
+
+    if search:
+        clients = search_clients_with_surname(search, request.user)
+    else:
+        clients = request.user.clients.all()
+
+
+    return JsonResponse(list(clients.values('id', 'name', 'surname', 'telephone', 'telegram', 'email', 'date_birth', 'allegria', 'client_source', 'created_at', 'whose_client')), safe=False)
