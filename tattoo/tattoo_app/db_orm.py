@@ -14,9 +14,9 @@ import re
 # Запускаємо Django
 django.setup()
 from asgiref.sync import sync_to_async
-from tattoo_app.models import User, Client
+from tattoo_app.models import User, Client, Appointment
 from asgiref.sync import async_to_sync 
-
+from django.utils import timezone
 from django.contrib.auth import authenticate
 
 import re
@@ -121,3 +121,42 @@ def search_clients_with_surname(search, whose_client):
         return clients
 
 
+
+
+
+
+def add_session_client(id_appointment, date_session_appointment, time_start_appointment, duration_minutes_appointment, price_appointment, service_appointment, notes_appointment):
+    client_appointment = Client.objects.get(id=id_appointment)
+    appointment = Appointment.objects.create(
+        client=client_appointment,
+        date_session=date_session_appointment,
+        time_start=time_start_appointment,
+        duration_minutes=int(duration_minutes_appointment),
+        price=price_appointment,
+        service=service_appointment,
+        notes=notes_appointment,
+    )
+    return appointment
+
+
+
+def session_today(clients):
+    dict_session = {
+        "all": 0,
+        "completed": 0,
+        "scheduled": 0
+    }
+    today = timezone.now().date()
+    for client in clients:
+        for appointment in client.appointments.all():
+            if today == appointment.date_session and appointment.status == "scheduled":
+                dict_session["scheduled"] += 1
+            elif today == appointment.date_session and appointment.status == "completed":
+                dict_session["completed"] += 1
+
+
+    dict_session["all"] = dict_session["completed"]+dict_session["scheduled"]
+
+    return dict_session
+
+    

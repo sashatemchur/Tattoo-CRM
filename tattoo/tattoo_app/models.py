@@ -37,14 +37,23 @@ class Client(models.Model):
 
 
 
-class Appointments(models.Model):
+class Appointment(models.Model):
+
+    STATUS_CHOICES = [
+        ("scheduled", "Заплановано"),
+        ("completed", "Завершено"),
+        ("cancelled", "Скасовано"),
+        ("no_show", "Клієнт не прийшов"),
+    ]
+    
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="appointments")
     date_session = models.DateField("Date of session")
     time_start = models.TimeField("Time start")  
     duration_minutes = models.IntegerField("Duration minutes") 
     price = models.DecimalField("Price", max_digits=8, decimal_places=2) 
     service = models.CharField('Service', max_length = 500)
-    notes = models.CharField('Notes', max_length = 500, blank=True)
+    notes = models.TextField("Notes", blank=True)
+    status = models.CharField("Status", max_length=20, choices=STATUS_CHOICES, default="scheduled")
 
 
     def __str__(self):

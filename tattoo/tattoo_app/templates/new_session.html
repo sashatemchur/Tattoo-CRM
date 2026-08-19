@@ -493,7 +493,13 @@
 
             {% endif %}
 
-
+            {% if messages %}
+                <div class="messages-container" style="margin: 20px 0;">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
             <button
                     type="submit"
                     class="submit-btn">

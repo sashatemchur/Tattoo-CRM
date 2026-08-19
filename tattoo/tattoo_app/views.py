@@ -15,8 +15,8 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 
 from asgiref.sync import async_to_sync 
-
-from .db_orm import create_user, check_repeat_email, login_user, change_password, create_client, client_delete, search_clients, search_clients_with_surname
+from django.contrib import messages
+from .db_orm import create_user, check_repeat_email, login_user, change_password, create_client, client_delete, search_clients, search_clients_with_surname, add_session_client, session_today
 #import aiohttp
 #import threading
 from decouple import config
@@ -222,7 +222,14 @@ def sign_in_password_recovery(request):
 @login_required
 def profile(request):
     print(request.user)
-    context = {"name": request.user.first_name}
+    data_session_today = session_today(request.user.clients.all())
+    context = {
+        "name": request.user.first_name,
+        "all_session": data_session_today["all"],
+        "completed_session": data_session_today["completed"],
+        "scheduled_session": data_session_today["scheduled"]
+    
+    }
     return render(request, 'profile.html', context)
     
 
@@ -302,7 +309,24 @@ def delete_client(request, id_client):
 def new_session(request):
     if request.method == "POST":
         data = request.POST.dict()
-        print(data)
+        if str(request.POST.get("client_type")) == "existing":
+            add_session_client(data['client'], data['date'],data['time'], data['duration'],data['price'], data['service'], data['notes'])
+            messages.success(request, "Запис успішно створено!")
+            return redirect('new_session')
+
+        elif str(request.POST.get("client_type")) == "new": 
+            try:
+                allegria = "allegria" in request.POST
+                client = create_client(data['name'], data['surname'], data['telephone'], data['date_birth'], data['telegram'], data['email'], data['client_source'], allegria, request.user)
+                add_session_client(client.id, data['date'],data['time'], data['duration'],data['price'], data['service'], data['notes'])
+                messages.success(request, "Запис та клієнта успішно створено!")
+
+                return redirect('new_session')
+            except:
+                messages.error(request, "Помилка! Цей користувач уже існує.")
+                return redirect('new_session')
+
+
 
     context = {"clients": request.user.clients.all(), "clients_count": len(request.user.clients.all())}
     return render(request, 'new_session.html', context)
@@ -321,3 +345,5 @@ def clients_search(request):
 
 
     return JsonResponse(list(clients.values('id', 'name', 'surname', 'telephone', 'telegram', 'email', 'date_birth', 'allegria', 'client_source', 'created_at', 'whose_client')), safe=False)
+
+
