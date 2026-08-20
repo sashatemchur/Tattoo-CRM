@@ -246,141 +246,31 @@
         
                 <div class="section-header">
         
-                    <h2>Останні записи</h2>
+                    <h2>Сьогоднішні записи</h2>
         
-                    <a href="#">Усі записи →</a>
+                    <a href="/profile/appointments/">Усі записи →</a>
         
                 </div>
         
                 <div class="appointment-list">
         
-                    <div class="appointment-card">
-        
-                        <div class="appointment-user">
-        
-                            <div class="avatar">
-                                А
-                            </div>
-        
-                            <div>
-        
-                                <h3>Анна</h3>
-        
-                                <span>Маленьке тату</span>
-        
-                            </div>
-        
-                        </div>
-        
-                        <div class="appointment-time">
-        
-                            13:00
-        
-                        </div>
-        
-                        <div class="appointment-status confirmed">
-        
-                            Підтверджено
-        
-                        </div>
-        
-                        <a href="#" class="open-btn">
-        
-                            Відкрити
-        
-                        </a>
-        
-                    </div>
-        
-                    <div class="appointment-card">
-        
-                        <div class="appointment-user">
-        
-                            <div class="avatar">
-                                І
-                            </div>
-        
-                            <div>
-        
-                                <h3>Іван</h3>
-        
-                                <span>Консультація</span>
-        
-                            </div>
-        
-                        </div>
-        
-                        <div class="appointment-time">
-        
-                            14:30
-        
-                        </div>
-        
-                        <div class="appointment-status waiting">
-        
-                            Очікує
-        
-                        </div>
-        
-                        <a href="#" class="open-btn">
-        
-                            Відкрити
-        
-                        </a>
-        
-                    </div>
-        
-                    <div class="appointment-card">
-        
-                        <div class="appointment-user">
-        
-                            <div class="avatar">
-                                М
-                            </div>
-        
-                            <div>
-        
-                                <h3>Максим</h3>
-        
-                                <span>Корекція</span>
-        
-                            </div>
-        
-                        </div>
-        
-                        <div class="appointment-time">
-        
-                            16:00
-        
-                        </div>
-        
-                        <div class="appointment-status confirmed">
-        
-                            Підтверджено
-        
-                        </div>
-        
-                        <a href="#" class="open-btn">
-        
-                            Відкрити
-        
-                        </a>
-        
-                    </div>
+
+                    {% for appointment in all_data_session %}
 
                     <div class="appointment-card">
         
                         <div class="appointment-user">
         
                             <div class="avatar">
-                                М
+                                {{ appointment.client.name|first|upper }}
                             </div>
         
                             <div>
         
-                                <h3>Максим</h3>
+                                <h3>{{ appointment.client.name }}</h3>
+                                <h3>{{ appointment.client.telephone }}</h3>
         
-                                <span>Корекція</span>
+                                <span>{{ appointment.service }}</span>
         
                             </div>
         
@@ -388,17 +278,17 @@
         
                         <div class="appointment-time">
         
-                            16:00
+                            {{ appointment.time_start|time:"H:i" }}
         
                         </div>
         
                         <div class="appointment-status confirmed">
         
-                            Підтверджено
+                            {{ appointment.get_status_display }}
         
                         </div>
         
-                        <a href="#" class="open-btn">
+                        <a href="/profile/appointments-client/{{ appointment.client.id }}/" class="open-btn">
         
                             Відкрити
         
@@ -406,6 +296,9 @@
         
                     </div>
         
+                    {% endfor %}
+                
+
                 </div>
         
             </div>

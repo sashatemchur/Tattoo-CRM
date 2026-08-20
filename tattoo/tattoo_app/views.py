@@ -16,7 +16,8 @@ from django.contrib.auth.decorators import login_required
 
 from asgiref.sync import async_to_sync 
 from django.contrib import messages
-from .db_orm import create_user, check_repeat_email, login_user, change_password, create_client, client_delete, search_clients, search_clients_with_surname, add_session_client, session_today
+from .db_orm import create_user, check_repeat_email, login_user, change_password, create_client, client_delete, search_clients, search_clients_with_surname
+from .db_orm import add_session_client, session_today, session_today_all_info, get_client_for_id, count_session_client_for_id, delete_for_id_appointment
 #import aiohttp
 #import threading
 from decouple import config
@@ -222,12 +223,14 @@ def sign_in_password_recovery(request):
 @login_required
 def profile(request):
     print(request.user)
+    all_data_session = session_today_all_info(request.user)
     data_session_today = session_today(request.user.clients.all())
     context = {
         "name": request.user.first_name,
         "all_session": data_session_today["all"],
         "completed_session": data_session_today["completed"],
-        "scheduled_session": data_session_today["scheduled"]
+        "scheduled_session": data_session_today["scheduled"],
+        "all_data_session": all_data_session
     
     }
     return render(request, 'profile.html', context)
@@ -347,3 +350,26 @@ def clients_search(request):
     return JsonResponse(list(clients.values('id', 'name', 'surname', 'telephone', 'telegram', 'email', 'date_birth', 'allegria', 'client_source', 'created_at', 'whose_client')), safe=False)
 
 
+
+@login_required
+def appointments_client(request, id_client):
+    client = get_client_for_id(id_client, request.user)
+    session_client = count_session_client_for_id(id_client, request.user)
+    if client != False:
+        context = {
+            "client": client,
+            "appointments_count": session_client.count(),
+            "appointments": session_client.all(),
+
+        }
+        return render(request, "appointments_client.html", context)
+    else:
+        return redirect("profile")
+
+
+
+
+@login_required
+def appointments_client_delete(request, id_appointment, id_client):
+    delete_for_id_appointment(id_appointment)
+    return redirect(f"/profile/appointments-client/{id_client}/")

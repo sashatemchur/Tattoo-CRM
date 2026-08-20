@@ -1,0 +1,327 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Історія сеансів | TattooCRM</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{% static 'css/appointments_client/appointments_client.css' %}">
+
+</head>
+
+
+<body>
+
+
+<div class="appointments-page">
+
+    <div class="appointments-container">
+
+
+        <!-- TOP -->
+
+        <div class="top">
+
+            <a href="/profile/clients/" class="back-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Всі клієнти
+
+            </a>
+
+        </div>
+
+
+        <!-- CLIENT HEADER -->
+        
+        <div class="client-header">
+
+            <div class="client-avatar">
+
+                <i class="fa-regular fa-user"></i>
+
+            </div>
+            
+
+            <div class="client-info">
+
+                <h1>
+                    {{ client.name }}
+                    {{ client.surname }}
+                </h1>
+
+                <p>
+                    <i class="fa-solid fa-phone"></i>
+
+                    {{ client.telephone }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-regular fa-calendar"></i>
+                </div>
+
+                <div>
+
+                    <span>Всього сеансів</span>
+
+                    <strong>
+                        {{ appointments_count }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+
+                <div>
+
+                    <span>Витрачено</span>
+
+                    <strong>
+                        {{ total_spent }} ₴
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- APPOINTMENTS -->
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>Історія сеансів</h2>
+
+                <p>
+                    Усі записи цього клієнта
+                </p>
+
+            </div>
+
+
+            <a
+                    href="/profile/new-session/"
+                    class="add-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Новий запис
+
+            </a>
+
+        </div>
+
+
+        {% if appointments %}
+
+
+            <div class="appointments-list">
+
+
+                {% for appointment in appointments %}
+
+                    <div class="appointment-card">
+
+
+                        <div class="appointment-date">
+
+                            <span>
+                                {{ appointment.date_session|date:"d" }}
+                            </span>
+
+                            <small>
+                                {{ appointment.date_session|date:"M" }}
+                            </small>
+
+                        </div>
+
+
+                        <div class="appointment-main">
+
+
+                            <div class="appointment-title">
+
+                                <h3>
+                                    {{ appointment.service }}
+                                </h3>
+
+
+                                {% if appointment.status == "scheduled" %}
+
+                                    <span class="status scheduled">
+                                        Заплановано
+                                    </span>
+
+                                {% elif appointment.status == "completed" %}
+
+                                    <span class="status completed">
+                                        Завершено
+                                    </span>
+
+                                {% elif appointment.status == "cancelled" %}
+
+                                    <span class="status cancelled">
+                                        Скасовано
+                                    </span>
+
+                                {% elif appointment.status == "no_show" %}
+
+                                    <span class="status no-show">
+                                        Не прийшов
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="appointment-details">
+
+                                <span>
+
+                                    <i class="fa-regular fa-clock"></i>
+
+                                    {{ appointment.time_start|time:"H:i" }}
+
+                                </span>
+
+
+                                <span>
+
+                                    <i class="fa-solid fa-hourglass-half"></i>
+
+                                    {{ appointment.duration_minutes }} хв
+
+                                </span>
+
+
+                                <span>
+
+                                    <i class="fa-solid fa-money-bill"></i>
+
+                                    {{ appointment.price }} ₴
+
+                                </span>
+
+                            </div>
+
+
+                            {% if appointment.notes %}
+
+                                <p class="notes">
+
+                                    <i class="fa-regular fa-note-sticky"></i>
+
+                                    {{ appointment.notes }}
+
+                                </p>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <div class="appointment-actions">
+
+                            <a
+                                    href="/profile/appointments-client/delete/{{ appointment.id }}/{{ client.id }}"
+                                    class="action-btn"
+                                    title="Переглянути">
+
+                                <i class="fa-solid fa-trash"></i>
+
+
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <div class="empty-icon">
+
+                    <i class="fa-regular fa-calendar-xmark"></i>
+
+                </div>
+
+                <h3>Сеансів ще немає</h3>
+
+                <p>
+                    Для цього клієнта ще не створено жодного запису.
+                </p>
+
+                <a
+                        href="/profile/new-session/"
+                        class="add-btn">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Створити перший запис
+
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

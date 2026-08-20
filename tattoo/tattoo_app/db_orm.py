@@ -160,3 +160,33 @@ def session_today(clients):
     return dict_session
 
     
+def session_today_all_info(user):
+    today = timezone.now().date()
+
+
+    today_appointments = Appointment.objects.filter(
+        date_session=today,
+        client__whose_client=user
+    ).select_related('client')
+
+
+    return today_appointments
+
+
+
+def get_client_for_id(id_client, whose_client):
+    try:
+        client = Client.objects.get(id=id_client, whose_client=whose_client)
+        return client
+    except:
+        return False
+
+
+def count_session_client_for_id(id_client, whose_client):
+    client = Client.objects.get(id=id_client, whose_client=whose_client)
+    return client.appointments
+
+
+def delete_for_id_appointment(id_appointment):
+    appointment = Appointment.objects.get(id=id_appointment)
+    appointment.delete()

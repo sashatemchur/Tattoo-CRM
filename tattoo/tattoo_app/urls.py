@@ -20,6 +20,9 @@ urlpatterns = [
     path('profile/client/<int:id_client>/delete/', views.delete_client, name='delete_client'),
     path('profile/new-session/', views.new_session, name='new_session'),
     path('profile/clients/search/', views.clients_search, name='clients_search'),
+    path('profile/appointments-client/<int:id_client>/', views.appointments_client, name='appointments_client'),
+    path('profile/appointments-client/delete/<int:id_appointment>/<int:id_client>', views.appointments_client_delete, name='appointments_client_delete'),
+
 ]
 
 if settings.DEBUG:
