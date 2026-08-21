@@ -1,0 +1,448 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Всі записи | TattooCRM</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{% static 'css/appointments/appointments.css' %}">
+
+</head>
+
+<body>
+
+<div class="appointments-page">
+
+    <div class="appointments-container">
+
+
+        <!-- TOP -->
+
+        <div class="topbar">
+
+            <a href="/profile/" class="back-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Назад
+
+            </a>
+
+            <a href="/profile/new-session/" class="add-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Новий запис
+
+            </a>
+
+        </div>
+
+
+        <!-- HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Всі записи</h1>
+
+                <p>
+                    Записи всіх ваших клієнтів
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                </div>
+
+                <div>
+
+                    <span>Всього записів</span>
+
+                    <strong>{{ appointments_count }}</strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+
+                </div>
+
+                <div>
+
+                    <span>Завершено</span>
+
+                    <strong>{{ completed_count }}</strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-calendar-day"></i>
+
+                </div>
+
+                <div>
+
+                    <span>Заплановано</span>
+
+                    <strong>{{ scheduled_count }}</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FILTERS -->
+
+        <div class="filters">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    placeholder="Пошук клієнта або телефону..."
+                    id="appointmentSearch">
+
+            </div>
+
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    Всі статуси
+                </option>
+
+                <option value="scheduled">
+                    Заплановано
+                </option>
+
+                <option value="completed">
+                    Завершено
+                </option>
+
+                <option value="cancelled">
+                    Скасовано
+                </option>
+
+                <option value="no_show">
+                    Не прийшов
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- APPOINTMENTS -->
+
+        {% if appointments %}
+
+            <div class="appointments-list" id="appointmentsList">
+
+
+                {% for appointment in appointments %}
+
+                    <div
+                        class="appointment-card"
+                        data-name="{{ appointment.client.name|lower }}"
+                        data-phone="{{ appointment.client.telephone }}"
+                        data-status="{{ appointment.status }}">
+
+
+                        <!-- CLIENT -->
+
+                        <div class="appointment-user">
+
+                            <div class="avatar">
+
+                                {{ appointment.client.name|first|upper }}
+
+                            </div>
+
+
+                            <div class="user-info">
+
+                                <h3>
+
+                                    {{ appointment.client.name }}
+
+                                    {{ appointment.client.surname }}
+
+                                </h3>
+
+
+                                <span class="phone">
+
+                                    <i class="fa-solid fa-phone"></i>
+
+                                    {{ appointment.client.telephone }}
+
+                                </span>
+
+
+                                <span class="service">
+
+                                    {{ appointment.service }}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DATE -->
+
+                        <div class="appointment-date">
+
+                            <strong>
+
+                                {{ appointment.date_session|date:"d" }}
+
+                            </strong>
+
+                            <span>
+
+                                {{ appointment.date_session|date:"M" }}
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- TIME -->
+
+                        <div class="appointment-time">
+
+                            <i class="fa-regular fa-clock"></i>
+
+                            {{ appointment.time_start|time:"H:i" }}
+
+                        </div>
+
+
+                        <!-- PRICE -->
+
+                        <div class="appointment-price">
+
+                            {{ appointment.price }} ₴
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="appointment-status
+                            {% if appointment.status == 'completed' %}
+                                completed
+                            {% elif appointment.status == 'cancelled' %}
+                                cancelled
+                            {% elif appointment.status == 'no_show' %}
+                                no-show
+                            {% else %}
+                                scheduled
+                            {% endif %}">
+
+                            {{ appointment.get_status_display }}
+
+                        </div>
+
+
+                        <!-- OPEN -->
+
+                        <a
+                            href="/profile/appointments-client/{{ appointment.client.id }}/"
+                            class="open-btn">
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+                        </a>
+
+
+                    </div>
+
+                {% endfor %}
+
+
+            </div>
+
+
+            <div class="no-results" id="noResults">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <h3>Нічого не знайдено</h3>
+
+                <p>
+                    Спробуйте змінити пошук або фільтр.
+                </p>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+
+                    <i class="fa-regular fa-calendar-xmark"></i>
+
+                </div>
+
+                <h2>Записів ще немає</h2>
+
+                <p>
+                    У вас поки немає жодного запису.
+                </p>
+
+                <a
+                    href="/profile/add_appointment/"
+                    class="add-btn">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Створити запис
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+const searchInput =
+    document.getElementById("appointmentSearch");
+
+const statusFilter =
+    document.getElementById("statusFilter");
+
+const cards =
+    document.querySelectorAll(".appointment-card");
+
+const noResults =
+    document.getElementById("noResults");
+
+
+function filterAppointments() {
+
+    const search =
+        searchInput.value.toLowerCase().trim();
+
+    const status =
+        statusFilter.value;
+
+    let visible = 0;
+
+
+    cards.forEach(function(card) {
+
+        const name =
+            card.dataset.name;
+
+        const phone =
+            card.dataset.phone;
+
+        const cardStatus =
+            card.dataset.status;
+
+
+        const matchesSearch =
+            name.includes(search) ||
+            phone.includes(search);
+
+
+        const matchesStatus =
+            status === "all" ||
+            cardStatus === status;
+
+
+        if (matchesSearch && matchesStatus) {
+
+            card.style.display = "";
+
+            visible++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+
+    if (noResults) {
+
+        noResults.style.display =
+            visible === 0 ? "block" : "none";
+
+    }
+
+}
+
+
+searchInput?.addEventListener(
+    "input",
+    filterAppointments
+);
+
+
+statusFilter?.addEventListener(
+    "change",
+    filterAppointments
+);
+
+</script>
+
+</body>
+
+</html>

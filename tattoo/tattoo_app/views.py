@@ -18,6 +18,7 @@ from asgiref.sync import async_to_sync
 from django.contrib import messages
 from .db_orm import create_user, check_repeat_email, login_user, change_password, create_client, client_delete, search_clients, search_clients_with_surname
 from .db_orm import add_session_client, session_today, session_today_all_info, get_client_for_id, count_session_client_for_id, delete_for_id_appointment
+from .db_orm import change_status_for_id_appointment, all_data_appointments, status_count_data_appointments
 #import aiohttp
 #import threading
 from decouple import config
@@ -373,3 +374,29 @@ def appointments_client(request, id_client):
 def appointments_client_delete(request, id_appointment, id_client):
     delete_for_id_appointment(id_appointment)
     return redirect(f"/profile/appointments-client/{id_client}/")
+
+
+@login_required
+def appointment_change_status(request, id_appointment):
+   if request.method == "POST":
+        new_status = request.POST.get("status")
+        change_status_for_id_appointment(id_appointment, new_status)
+        return redirect("profile")
+
+
+@login_required
+def appointments_all(request):  
+    appointments = all_data_appointments(request.user)
+    appointments_status_dict = status_count_data_appointments(request.user)
+
+    context = {
+        "appointments": appointments,
+        "appointments_count": appointments.count(),
+        "completed_count": appointments_status_dict["completed"],
+        "scheduled_count": appointments_status_dict["scheduled"]
+        }
+
+    return render(request, "appointments.html", context)
+
+
+

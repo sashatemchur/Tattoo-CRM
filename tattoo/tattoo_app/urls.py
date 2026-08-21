@@ -22,6 +22,8 @@ urlpatterns = [
     path('profile/clients/search/', views.clients_search, name='clients_search'),
     path('profile/appointments-client/<int:id_client>/', views.appointments_client, name='appointments_client'),
     path('profile/appointments-client/delete/<int:id_appointment>/<int:id_client>', views.appointments_client_delete, name='appointments_client_delete'),
+    path('profile/appointment/<int:id_appointment>/status/', views.appointment_change_status, name='appointment_change_status'),
+    path('profile/appointments-all/', views.appointments_all, name='appointments_all'),
 
 ]
 

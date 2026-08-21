@@ -190,3 +190,29 @@ def count_session_client_for_id(id_client, whose_client):
 def delete_for_id_appointment(id_appointment):
     appointment = Appointment.objects.get(id=id_appointment)
     appointment.delete()
+
+def change_status_for_id_appointment(id_appointment, new_status):
+    appointment = Appointment.objects.get(id=id_appointment)
+    appointment.status = new_status
+    appointment.save()
+
+def all_data_appointments(whose_client):
+    appointments = Appointment.objects.filter(client__whose_client=whose_client)
+    return appointments
+
+
+
+
+def status_count_data_appointments(whose_client):
+    appointments_scheduled = Appointment.objects.filter(status="scheduled", client__whose_client=whose_client).count()
+    appointments_completed = Appointment.objects.filter(status="completed", client__whose_client=whose_client).count()
+
+    dict_status = {
+        "completed": appointments_completed,
+        "scheduled": appointments_scheduled
+    }
+
+
+    return dict_status
+
+

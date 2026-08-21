@@ -248,7 +248,7 @@
         
                     <h2>Сьогоднішні записи</h2>
         
-                    <a href="/profile/appointments/">Усі записи →</a>
+                    <a href="/profile/appointments-all/">Усі записи →</a>
         
                 </div>
         
@@ -282,12 +282,63 @@
         
                         </div>
         
-                        <div class="appointment-status confirmed">
-        
-                            {{ appointment.get_status_display }}
-        
+                        <div class="appointment-status-wrapper">
+
+                            <div class="appointment-status confirmed">
+                                {{ appointment.get_status_display }}
+                            </div>
+                    
+                            <button
+                                type="button"
+                                class="change-status-btn"
+                                data-appointment-id="{{ appointment.id }}">
+                    
+                                <i class="fa-solid fa-chevron-down"></i>
+                    
+                            </button>
+                    
+                    
+                            <div
+                                class="status-menu"
+                                id="status-menu-{{ appointment.id }}">
+                    
+                                <form
+                                    method="POST"
+                                    action="/profile/appointment/{{ appointment.id }}/status/">
+                    
+                                    {% csrf_token %}
+                    
+                                    <button type="submit" name="status" value="scheduled">
+                                        Заплановано
+                                    </button>
+                    
+                                    <button type="submit" name="status" value="completed">
+                                        Завершено
+                                    </button>
+                    
+                                    <button type="submit" name="status" value="cancelled">
+                                        Скасовано
+                                    </button>
+                    
+                                    <button type="submit" name="status" value="no_show">
+                                        Не прийшов
+                                    </button>
+                    
+                                </form>
+                    
+                            </div>
+                    
+                        
                         </div>
-        
+                        <script>
+                            function toggleStatusMenu(id) {
+
+                            const menu = document.getElementById(`status-menu-${id}`);
+
+                            menu.classList.toggle("show");
+
+                            }
+                        </script>
                         <a href="/profile/appointments-client/{{ appointment.client.id }}/" class="open-btn">
         
                             Відкрити
@@ -478,6 +529,43 @@
 
         });
     </script>
+    <script>
 
+        document.querySelectorAll(".change-status-btn").forEach(function(button) {
+        
+            button.addEventListener("click", function() {
+        
+                const id = this.dataset.appointmentId;
+        
+                const menu = document.getElementById(
+                    "status-menu-" + id
+                );
+        
+                menu.classList.toggle("show");
+        
+            });
+        
+        });
+        
+        
+        document.addEventListener("click", function(event) {
+        
+            if (
+                !event.target.closest(".appointment-status-wrapper")
+            ) {
+        
+                document
+                    .querySelectorAll(".status-menu")
+                    .forEach(function(menu) {
+        
+                        menu.classList.remove("show");
+        
+                    });
+        
+            }
+        
+        });
+        
+    </script>
 </body>
 </html>
